@@ -1,0 +1,49 @@
+package org.example.ad.model;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Favorite {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private double idealPrice;
+
+    @ManyToOne
+    private Camera camera;
+
+    @ManyToOne
+    private Customer customer;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public double getIdealPrice() {
+        return idealPrice;
+    }
+
+    public void setIdealPrice(double idealPrice) {
+        this.idealPrice = idealPrice;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+}
