@@ -1,12 +1,15 @@
 package org.example.ad.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 public class Preference {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ColumnDefault("0")
     private int amount;
 
     @ManyToOne

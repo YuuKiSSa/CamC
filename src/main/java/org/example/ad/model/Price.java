@@ -9,9 +9,15 @@ public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false)
     private Date time;
+
+    @Column(nullable = false)
     private double price;
-    private String platform;
+
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
 
     @ManyToOne
     private Camera camera;
@@ -40,11 +46,11 @@ public class Price {
         this.price = price;
     }
 
-    public String getPlatform() {
+    public Platform getPlatform() {
         return platform;
     }
 
-    public void setPlatform(String platform) {
+    public void setPlatform(Platform platform) {
         this.platform = platform;
     }
 

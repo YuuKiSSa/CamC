@@ -7,6 +7,8 @@ public class Camera_website {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false)
     private String website;
 
     @ManyToOne

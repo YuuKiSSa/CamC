@@ -9,9 +9,13 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(length = 40, nullable = false)
     private String category;
 
     @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "camera_id"))
     private List<Camera> cameras;
 
 

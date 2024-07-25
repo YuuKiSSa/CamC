@@ -11,11 +11,22 @@ public class Camera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String brand;
+
+    @Enumerated(EnumType.STRING)
+    private Brand brand;
+
+    @Column(length = 30, nullable = false)
     private String model;
-    private String category;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @Column(length = 500)
     private String description;
+
+    @Column(nullable = false)
     private Date releaseTime;
+
     private double effectivePixel;
     private int ISO;
     private int focusPoint;
@@ -50,11 +61,11 @@ public class Camera {
         this.id = id;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
@@ -66,11 +77,11 @@ public class Camera {
         this.model = model;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

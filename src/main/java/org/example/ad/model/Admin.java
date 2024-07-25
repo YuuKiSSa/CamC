@@ -1,12 +1,16 @@
 package org.example.ad.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
 public class Admin {
     @Id
+    @Column(length = 20)
     private String id;
+
+    @Column(length = 30)
     private String password;
 
     public String getPassword() {
