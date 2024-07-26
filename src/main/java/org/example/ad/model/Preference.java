@@ -3,11 +3,15 @@ package org.example.ad.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.LocalDate;
+
 @Entity
 public class Preference {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private LocalDate date;
 
     @ColumnDefault("0")
     private int amount;

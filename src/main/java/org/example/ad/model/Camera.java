@@ -47,12 +47,12 @@ public class Camera {
     private List<Favorite> favorites;
 
     @OneToMany(mappedBy = "camera")
-    private List<Camera_website> camera_websites;
+    private List<CameraWebsite> cameraWebsites;
 
     @OneToMany(mappedBy = "camera")
-    private List<Camera_image> camera_images;
+    private List<CameraImage> cameraImages;
 
-
+    // Getters and setters
     public long getId() {
         return id;
     }

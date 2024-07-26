@@ -18,7 +18,7 @@ public class Tag {
             inverseJoinColumns = @JoinColumn(name = "camera_id"))
     private List<Camera> cameras;
 
-
+    // Getters and Setters
     public long getId() {
         return id;
     }

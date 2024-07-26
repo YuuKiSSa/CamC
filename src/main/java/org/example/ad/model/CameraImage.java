@@ -3,16 +3,17 @@ package org.example.ad.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Camera_website {
+public class CameraImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
-    private String website;
+    private String url;
 
     @ManyToOne
     private Camera camera;
+
 
     public long getId() {
         return id;
@@ -22,12 +23,12 @@ public class Camera_website {
         this.id = id;
     }
 
-    public String getWebsite() {
-        return website;
+    public String getImage() {
+        return url;
     }
 
-    public void setWebsite(String website) {
-        this.website = website;
+    public void setImage(String url) {
+        this.url = url;
     }
 
     public Camera getCamera() {

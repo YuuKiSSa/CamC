@@ -2,6 +2,7 @@ package org.example.ad.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -11,7 +12,7 @@ public class Price {
     private long id;
 
     @Column(nullable = false)
-    private Date time;
+    private LocalDate date;
 
     @Column(nullable = false)
     private double price;
@@ -30,12 +31,12 @@ public class Price {
         this.id = id;
     }
 
-    public Date getTime() {
-        return time;
+    public LocalDate getTime() {
+        return date;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTime(LocalDate date) {
+        this.date = date;
     }
 
     public double getPrice() {
