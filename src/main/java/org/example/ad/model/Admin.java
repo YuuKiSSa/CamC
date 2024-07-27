@@ -27,5 +27,5 @@ public class Admin {
 
     public void setId(String id) {
         this.id = id;
-    }
+    } 
 }
