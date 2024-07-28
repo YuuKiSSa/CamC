@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        .camera-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        .camera-item {
+            width: 30%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            text-decoration: none;
+            color: inherit; /* 保持字体颜色与页面一致 */
+        }
+        .camera-item:hover {
+            transform: scale(1.05);
+        }
+        .camera-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        .camera-info {
+            text-align: center;
+        }
+        .camera-info h3 {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .camera-info p {
+            margin: 5px 0;
+            color: #777;
+        }
+        .camera-price {
+            color: #e91e63;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="camera-container">
+        <!-- 使用Thymeleaf模板引擎进行循环 -->
+        <a th:each="camera : ${camera}" th:href="@{/camera/{id}(id=${camera.id})}" class="camera-item">
+            <div class="camera-image">
+                <img th:src="${camera.cameraImages[0].url}" alt="Camera Image">
+            </div>
+            <div class="camera-info">
+                <h3>Brand: <span th:text="${camera.brand}"></span></h3>
+                <p>Model: <span th:text="${camera.model}"></span></p>
+                <p>Effective Pixel: <span th:text="${camera.effectivePixel}"></span> MP</p>
+                <p>ISO: <span th:text="${camera.ISO}"></span></p>
+                <p>Focus Point: <span th:text="${camera.focusPoint}"></span></p>
+                <p>Video Resolution: <span th:text="${camera.videoResolution}"></span></p>
+                <p>Release Time: <span th:text="${#temporals.format(camera.releaseTime, 'yyyy-MM-dd')}"></span></p>
+                <p class="camera-price">Price: <span th:text="${#numbers.formatDecimal(camera.prices[0].amount, 1, 'COMMA', 2, 'POINT')}"></span>$</p>
+            </div>
+        </a>
+        <!-- 循环结束 -->
+    </div>
+</body>
+</html>
