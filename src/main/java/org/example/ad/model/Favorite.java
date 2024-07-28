@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"camera_id", "customer_id"})})
 public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

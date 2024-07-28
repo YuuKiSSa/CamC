@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.time.LocalDate;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"tag_id", "customer_id"})})
 public class Preference {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,7 @@ package org.example.ad.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"website", "platform"})})
 public class CameraWebsite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -10,6 +11,9 @@ public class CameraWebsite {
 
     @Column(nullable = false)
     private String website;
+
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
 
     @ManyToOne
     private Camera camera;
@@ -37,5 +41,13 @@ public class CameraWebsite {
 
     public void setCamera(Camera camera) {
         this.camera = camera;
+    }
+
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
     }
 }

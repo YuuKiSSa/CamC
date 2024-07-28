@@ -10,7 +10,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(length = 40, nullable = false)
+    @Column(length = 40, nullable = false, unique = true)
     private String category;
 
     @ManyToMany

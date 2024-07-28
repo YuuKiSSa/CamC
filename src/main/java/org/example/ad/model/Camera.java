@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"brand", "model"})})
 public class Camera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

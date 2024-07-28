@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"date", "camera_id", "platform"}))
 public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
