@@ -3,7 +3,7 @@ package org.example.ad.model;
 import jakarta.persistence.*;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -26,7 +26,7 @@ public class Camera {
     private String description;
 
     @Column(nullable = false)
-    private Date releaseTime;
+    private LocalDate releaseTime;
 
     private double effectivePixel;
     private int ISO;
@@ -94,11 +94,11 @@ public class Camera {
         this.description = description;
     }
 
-    public Date getReleaseTime() {
+    public LocalDate getReleaseTime() {
         return releaseTime;
     }
 
-    public void setReleaseTime(Date releaseTime) {
+    public void setReleaseTime(LocalDate releaseTime) {
         this.releaseTime = releaseTime;
     }
 
