@@ -14,7 +14,7 @@ public class Tag {
     private String category;
 
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "tag_id"),
+    @JoinTable(name = "tag_cameras", joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "camera_id"))
     private List<Camera> cameras;
 
