@@ -3,7 +3,7 @@ package org.example.ad.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"website", "platform"})})
+@Table(name = "camera_website", uniqueConstraints = { @UniqueConstraint(columnNames = {"website", "platform"})})
 public class CameraWebsite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
