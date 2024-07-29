@@ -55,19 +55,14 @@
 <body>
     <div class="camera-container">
         <!-- 使用Thymeleaf模板引擎进行循环 -->
-        <a th:each="camera : ${camera}" th:href="@{/camera/{id}(id=${camera.id})}" class="camera-item">
+        <a th:each="camera : ${cameras}" th:href="@{/customer/camera/{id}(id=${camera.id})}" class="camera-item">
             <div class="camera-image">
-                <img th:src="${camera.cameraImages[0].url}" alt="Camera Image">
+                <img th:if="${camera.cameraImages != null and #lists.size(camera.cameraImages) > 0}" th:src="${camera.cameraImages[0].url}" alt="Camera Image">
             </div>
             <div class="camera-info">
-                <h3>Brand: <span th:text="${camera.brand}"></span></h3>
-                <p>Model: <span th:text="${camera.model}"></span></p>
-                <p>Effective Pixel: <span th:text="${camera.effectivePixel}"></span> MP</p>
-                <p>ISO: <span th:text="${camera.ISO}"></span></p>
-                <p>Focus Point: <span th:text="${camera.focusPoint}"></span></p>
-                <p>Video Resolution: <span th:text="${camera.videoResolution}"></span></p>
-                <p>Release Time: <span th:text="${#temporals.format(camera.releaseTime, 'yyyy-MM-dd')}"></span></p>
-                <p class="camera-price">Price: <span th:text="${#numbers.formatDecimal(camera.prices[0].amount, 1, 'COMMA', 2, 'POINT')}"></span>$</p>
+                <h3 th:text="${camera.brand}"></h3>
+                <p th:text="${camera.model}"></p>
+                <p class="camera-price" th:if="${camera.prices != null and #lists.size(camera.prices) > 0}" th:text="${#numbers.formatDecimal(camera.prices[0].price, 1, 'COMMA', 2, 'POINT')}"></p>
             </div>
         </a>
         <!-- 循环结束 -->
