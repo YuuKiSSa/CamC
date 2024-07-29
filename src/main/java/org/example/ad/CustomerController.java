@@ -1,7 +1,8 @@
 package org.example.ad;
 
+import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
@@ -33,6 +34,11 @@ public class CustomerController {
                                Model model) {
         System.out.println("Logged in as: " + username);
         model.addAttribute("cameras", customerService.findAll());
+        List<Camera> allPrefs = preferenceService.findAllByPref(username);
+        List<Camera> topThreePrefs = allPrefs.stream()
+                .limit(3)
+                .collect(Collectors.toList());
+        model.addAttribute("tag", topThreePrefs);
         return "customer/productList";
     }
 
@@ -45,12 +51,13 @@ public class CustomerController {
         Optional<Camera> camera = customerService.findById(id);
         if (camera.isPresent()) {
             model.addAttribute("camera", camera.get());
-
+           
             Customer customer = customerService.findByUsername(username).orElse(null);
             if (customer != null) {
                 Tag tag = camera.get().getTags().stream().findFirst().orElse(null); // Assuming each camera has at least one tag
                 if (tag != null) {
                     Preference preference = preferenceService.recordVisit(customer, tag);
+                   // model.addAttribute("tag",customerService.findTag(id));
                     System.out.println("Recorded visit for customer: " + username + " to tag: " + tag.getCategory());
                 }
             }
