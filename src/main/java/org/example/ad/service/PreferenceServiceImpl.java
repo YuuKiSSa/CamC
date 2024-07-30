@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PreferenceServiceImpl implements PreferenceService {
@@ -39,4 +40,15 @@ public class PreferenceServiceImpl implements PreferenceService {
 		// TODO Auto-generated method stub
 		return preferenceRepository.findByUserName(username);
 	}
+	
+	@Override
+	public Long findMostPreferredCameraIdByCustomer(Long customerId) {
+	    List<Object[]> results = preferenceRepository.findMostPreferredCameraIdByCustomer(customerId);
+	    if (!results.isEmpty()) {
+	        return (Long) results.get(0)[0]; // 获取列表中的第一个元素，即cameraId
+	    }
+	    return null; // 如果没有找到任何相机，返回null
+	}
+
+
 }

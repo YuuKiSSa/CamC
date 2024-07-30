@@ -1,6 +1,7 @@
 package org.example.ad.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
@@ -11,4 +12,7 @@ public interface PreferenceService {
     void recordVisits(Customer customer, List<Tag> tags);
 
 	List<Camera> findAllByPref(String username);
+	
+
+	Long findMostPreferredCameraIdByCustomer(Long customerId);
 }
