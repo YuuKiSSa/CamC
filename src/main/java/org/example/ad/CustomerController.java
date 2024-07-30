@@ -51,15 +51,11 @@ public class CustomerController {
         Optional<Camera> camera = customerService.findById(id);
         if (camera.isPresent()) {
             model.addAttribute("camera", camera.get());
-           
+
             Customer customer = customerService.findByUsername(username).orElse(null);
-            if (customer != null) {
-                Tag tag = camera.get().getTags().stream().findFirst().orElse(null); // Assuming each camera has at least one tag
-                if (tag != null) {
-                    Preference preference = preferenceService.recordVisit(customer, tag);
-                   // model.addAttribute("tag",customerService.findTag(id));
-                    System.out.println("Recorded visit for customer: " + username + " to tag: " + tag.getCategory());
-                }
+            if (customer != null && camera.get().getTags() != null && !camera.get().getTags().isEmpty()) {
+                preferenceService.recordVisits(customer, camera.get().getTags());
+                System.out.println("Recorded visit for customer: " + username + " to camera with multiple tags.");
             }
             return "customer/cameraDetail";
         } else {

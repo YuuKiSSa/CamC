@@ -18,19 +18,20 @@ public class PreferenceServiceImpl implements PreferenceService {
     private PreferenceRepository preferenceRepository;
 
     @Override
-    public Preference recordVisit(Customer customer, Tag tag) {
-        // Find existing preference or create a new one
-        Preference preference = preferenceRepository.findByCustomerAndTag(customer, tag)
-                .orElseGet(() -> {
-                    Preference newPreference = new Preference();
-                    newPreference.setCustomer(customer);
-                    newPreference.setTag(tag);
-                    return newPreference;
-                });
+    public void recordVisits(Customer customer, List<Tag> tags) {
+        tags.forEach(tag -> {
+            Preference preference = preferenceRepository.findByCustomerAndTag(customer, tag)
+                    .orElseGet(() -> {
+                        Preference newPreference = new Preference();
+                        newPreference.setCustomer(customer);
+                        newPreference.setTag(tag);
+                        return newPreference;
+                    });
 
-        preference.setDate(LocalDate.now());
-        preference.setAmount(preference.getAmount() + 1);  // Increment the visit count
-        return preferenceRepository.save(preference);
+            preference.setDate(LocalDate.now());
+            preference.setAmount(preference.getAmount() + 1);
+            preferenceRepository.save(preference);
+        });
     }
 
 	@Override

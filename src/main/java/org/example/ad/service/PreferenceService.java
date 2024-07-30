@@ -8,7 +8,7 @@ import org.example.ad.model.Preference;
 import org.example.ad.model.Tag;
 
 public interface PreferenceService {
-    Preference recordVisit(Customer customer, Tag tag);
+    void recordVisits(Customer customer, List<Tag> tags);
 
 	List<Camera> findAllByPref(String username);
 }
