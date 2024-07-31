@@ -28,6 +28,7 @@ public class Camera {
     @Column(nullable = false)
     private LocalDate releaseTime;
 
+    private double initialPrice;
     private double effectivePixel;
     private int ISO;
     private int focusPoint;
@@ -92,6 +93,14 @@ public class Camera {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getInitialPrice() {
+        return initialPrice;
+    }
+
+    public void setInitialPrice(double initialPrice) {
+        this.initialPrice = initialPrice;
     }
 
     public LocalDate getReleaseTime() {
