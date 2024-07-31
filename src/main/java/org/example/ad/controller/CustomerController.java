@@ -1,4 +1,4 @@
-package org.example.ad;
+package org.example.ad.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
-import org.example.ad.model.Preference;
-import org.example.ad.model.Tag;
 import org.example.ad.service.CustomerService;
 import org.example.ad.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +45,7 @@ public class CustomerController {
                                @RequestParam(defaultValue = "liangchang") String username,
                                @RequestParam(defaultValue = "liangchang") String password,
                                Model model) {
-        System.out.println("Accessing camera detail for id: " + id + " as user: " + username);
+        //System.out.println("Accessing camera detail for id: " + id + " as user: " + username);
         Optional<Camera> camera = customerService.findById(id);
         if (camera.isPresent()) {
             model.addAttribute("camera", camera.get());
@@ -55,11 +53,11 @@ public class CustomerController {
             Customer customer = customerService.findByUsername(username).orElse(null);
             if (customer != null && camera.get().getTags() != null && !camera.get().getTags().isEmpty()) {
                 preferenceService.recordVisits(customer, camera.get().getTags());
-                System.out.println("Recorded visit for customer: " + username + " to camera with multiple tags.");
+                //System.out.println("Recorded visit for customer: " + username + " to camera with multiple tags.");
             }
             return "customer/cameraDetail";
         } else {
-            System.out.println("Camera not found for id: " + id);
+            //System.out.println("Camera not found for id: " + id);
             return "error";
         }
     }

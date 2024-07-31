@@ -26,6 +26,7 @@ public class Camera {
 	@Column(nullable = false)
 	private Date releaseTime;
 
+	private double initialPrice;
 	private double effectivePixel;
 	private int ISO;
 	private Integer focusPoint;

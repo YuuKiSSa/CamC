@@ -1,7 +1,4 @@
-package org.example.ad;
-
-import java.util.List;
-import java.util.Optional;
+package org.example.ad.controller;
 
 import org.example.ad.model.Camera;
 import org.example.ad.service.CustomerService;

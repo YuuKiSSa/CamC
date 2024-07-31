@@ -37,7 +37,6 @@ public class PreferenceServiceImpl implements PreferenceService {
 
 	@Override
 	public List<Camera> findAllByPref(String username) {
-		// TODO Auto-generated method stub
 		return preferenceRepository.findByUserName(username);
 	}
 	
