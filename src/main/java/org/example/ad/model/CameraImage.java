@@ -24,11 +24,11 @@ public class CameraImage {
     }
 
     public String getImage() {
-        return url;
+        return getUrl();
     }
 
     public void setImage(String url) {
-        this.url = url;
+        this.setUrl(url);
     }
 
     public Camera getCamera() {
@@ -38,4 +38,12 @@ public class CameraImage {
     public void setCamera(Camera camera) {
         this.camera = camera;
     }
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

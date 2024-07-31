@@ -3,6 +3,7 @@ package org.example.ad.service;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Tag;
+import org.example.ad.repository.CameraImageRepository;
 import org.example.ad.repository.CameraRepository;
 import org.example.ad.repository.CustomerRepository;
 import org.example.ad.repository.TagRepository;
@@ -21,6 +22,8 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private CameraImageRepository cameraImageRepository;
     
 
     @Override
@@ -37,6 +40,12 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> findByUsername(String username) {
         return customerRepository.findByUsername(username);
     }
+
+	@Override
+	public List<String> findAllURL() {
+		// TODO Auto-generated method stub
+		return cameraImageRepository.findAllURL();
+	}
 
 //	@Override
 //	public List<String> findTag(Long id) {

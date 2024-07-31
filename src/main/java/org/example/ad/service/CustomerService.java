@@ -20,5 +20,7 @@ public interface CustomerService {
 
 	Optional<Customer> findByUsername(String username);
 
+	public List<String> findAllURL();
+
 //	public List<String> findTag(Long id);
 }

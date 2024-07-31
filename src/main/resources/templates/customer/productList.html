@@ -28,7 +28,7 @@
             transform: scale(1.05);
         }
         .camera-image img {
-            max-width: 100%;
+            max-width: 150px;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -63,7 +63,8 @@
             <div class="camera-info">
                 <h3 th:text="${camera.brand}"></h3>
                 <p th:text="${camera.model}"></p>
-                <p class="camera-price" th:if="${camera.prices != null and #lists.size(camera.prices) > 0}" th:text="${#numbers.formatDecimal(camera.prices[0].price, 1, 'COMMA', 2, 'POINT')}"></p>
+				<p class="camera-price" th:if="${camera.prices != null and #lists.size(camera.prices) > 0}"
+				                  th:text="|￥${#numbers.formatDecimal(camera.prices[0].price, 1, 'COMMA', 2, 'POINT')}|"></p>
             </div>
         </a>
         <!-- 循环结束 -->
@@ -74,13 +75,14 @@
     <div class="camera-container">
         <!-- 使用Thymeleaf模板引擎进行循环 -->
         <a th:each="camera : ${cameras}" th:href="@{/customer/camera/{id}(id=${camera.id})}" class="camera-item">
-            <div class="camera-image">
-                <img th:if="${camera.cameraImages != null and #lists.size(camera.cameraImages) > 0}" th:src="${camera.cameraImages[0].url}" alt="Camera Image">
-            </div>
+			<div class="camera-image">
+			    <img th:if="${camera.cameraImages != null and #lists.size(camera.cameraImages) > 0}" th:src="${camera.cameraImages[0].url}" alt="Camera Image">
+			</div>
             <div class="camera-info">
                 <h3 th:text="${camera.brand}"></h3>
                 <p th:text="${camera.model}"></p>
-                <p class="camera-price" th:if="${camera.prices != null and #lists.size(camera.prices) > 0}" th:text="${#numbers.formatDecimal(camera.prices[0].price, 1, 'COMMA', 2, 'POINT')}"></p>
+				<p class="camera-price" th:if="${camera.prices != null and #lists.size(camera.prices) > 0}"
+				                  th:text="|￥${#numbers.formatDecimal(camera.prices[0].price, 1, 'COMMA', 2, 'POINT')}|"></p>
             </div>
         </a>
         <!-- 循环结束 -->

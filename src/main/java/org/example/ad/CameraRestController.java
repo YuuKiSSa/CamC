@@ -21,6 +21,7 @@ public class CameraRestController {
     private PreferenceService preferenceService;
 	@Autowired
     private CustomerService customerService;
+	
 
 	@GetMapping("/most-preferred/camera-id/{customerId}")
 	public ResponseEntity<?> getMostPreferredCameraId(@PathVariable Long customerId) {
