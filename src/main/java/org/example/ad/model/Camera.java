@@ -3,7 +3,6 @@ package org.example.ad.model;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
-
 import java.time.LocalDate;
 import java.util.List;
 
