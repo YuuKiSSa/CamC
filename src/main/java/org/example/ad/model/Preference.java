@@ -38,6 +38,7 @@ public class Preference {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
     public int getAmount() {
         return amount;
     }
@@ -60,13 +61,5 @@ public class Preference {
 
     public void setTag(Tag tag) {
         this.tag = tag;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 }
