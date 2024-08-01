@@ -49,8 +49,8 @@
             <p>ISO: <span th:text="${camera.ISO}"></span></p>
             <p th:if="${camera.focusPoint != null}">Focus Point: <span th:text="${camera.focusPoint}"></span></p>
             <p>Video Resolution: <span th:text="${camera.videoResolution}"></span></p>
-            <p>Release Time: <span th:text="${#dates.format(camera.releaseTime, 'yyyy-MM-dd')}"></span></p>
-            <p class="camera-price" th:if="${camera.prices != null and #lists.size(camera.prices) > 0}">Price: <span th:text="${#numbers.formatDecimal(camera.prices[0].price, 1, 'COMMA', 2, 'POINT')}"></span>$</p>
+            <p>Release Time: <span th:text="${#temporals.format(camera.releaseTime, 'yyyy-MM-dd')}"></span></p>
+            <p class="camera-price" th:if="${camera.prices != null and #lists.size(camera.prices) > 0}">Price: $<span th:text="${#numbers.formatDecimal(camera.prices[0].price, 1, 'COMMA', 2, 'POINT')}"></span></p>
             <p>Description: <span th:text="${camera.description}"></span></p>
         </div>
     </div>
