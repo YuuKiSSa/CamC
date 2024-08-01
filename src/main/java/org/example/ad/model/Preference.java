@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import java.time.LocalDate;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"tag_id", "customer_id"})})
 public class Preference {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,5 +60,13 @@ public class Preference {
 
     public void setTag(Tag tag) {
         this.tag = tag;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

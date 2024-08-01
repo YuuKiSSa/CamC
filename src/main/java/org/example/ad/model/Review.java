@@ -2,7 +2,7 @@ package org.example.ad.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Review {
@@ -11,7 +11,7 @@ public class Review {
     private long id;
 
     @Column(nullable = false)
-    private Date time;
+    private LocalDateTime time;
 
     @Column(length = 500)
     private String comment;
@@ -34,11 +34,11 @@ public class Review {
         this.id = id;
     }
 
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
