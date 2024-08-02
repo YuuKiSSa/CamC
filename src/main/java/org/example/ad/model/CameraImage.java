@@ -14,7 +14,6 @@ public class CameraImage {
     @ManyToOne
     private Camera camera;
 
-
     public long getId() {
         return id;
     }

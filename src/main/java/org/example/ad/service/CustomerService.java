@@ -3,6 +3,7 @@ package org.example.ad.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Tag;
@@ -14,13 +15,11 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface CustomerService {
 
-	public List<Camera> findAll();
+	List<CameraListDTO> findAll();
 
 	Optional<Camera> findById(Long id);
 
 	Optional<Customer> findByUsername(String username);
 
-	public List<String> findAllURL();
-
-//	public List<String> findTag(Long id);
+	String findImageByCameraId(Long id);
 }

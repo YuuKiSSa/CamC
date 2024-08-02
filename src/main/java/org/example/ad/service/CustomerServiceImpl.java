@@ -1,5 +1,6 @@
 package org.example.ad.service;
 
+import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Tag;
@@ -24,11 +25,15 @@ public class CustomerServiceImpl implements CustomerService {
     private TagRepository tagRepository;
     @Autowired
     private CameraImageRepository cameraImageRepository;
-    
+
 
     @Override
-    public List<Camera> findAll() {
-        return cameraRepository.findAll();
+    public List<CameraListDTO> findAll() {
+        return cameraRepository.findAll().stream()
+                .map(c -> {
+                    return new CameraListDTO(c, cameraImageRepository.findUrlByCameraId(c.getId()));
+                })
+                .toList();
     }
 
     @Override
@@ -41,15 +46,8 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByUsername(username);
     }
 
-	@Override
-	public List<String> findAllURL() {
-		// TODO Auto-generated method stub
-		return cameraImageRepository.findAllURL();
-	}
-
-//	@Override
-//	public List<String> findTag(Long id) {
-//		// TODO Auto-generated method stub
-//		return tagRepository.findAllById(id);
-//	}
+    @Override
+    public String findImageByCameraId(Long id){
+        return cameraImageRepository.findUrlByCameraId(id);
+    }
 }

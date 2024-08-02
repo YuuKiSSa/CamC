@@ -12,7 +12,6 @@ public interface PreferenceService {
     void recordVisits(Customer customer, List<Tag> tags);
 
 	List<Camera> findAllByPref(String username);
-	
 
 	Long findMostPreferredCameraIdByCustomer(Long customerId);
 }

@@ -1,23 +1,25 @@
 package org.example.ad.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.example.ad.DTO.CameraDTO;
+import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.service.CustomerService;
 import org.example.ad.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/customer")
+@RestController
+@RequestMapping("/api")
 public class CustomerController {
 
     @Autowired
@@ -27,24 +29,24 @@ public class CustomerController {
     private PreferenceService preferenceService;
 
     @GetMapping("/list")
-    public String customerDash(@RequestParam(defaultValue = "liangchang") String username,
-                               @RequestParam(defaultValue = "liangchang") String password,
-                               Model model) {
-        System.out.println("Logged in as: " + username);
-        model.addAttribute("cameras", customerService.findAll());
-        List<Camera> allPrefs = preferenceService.findAllByPref(username);
-        List<Camera> topThreePrefs = allPrefs.stream()
-                .limit(3)
-                .collect(Collectors.toList());
-        model.addAttribute("tag", topThreePrefs);
-        return "customer/productList";
+    public ResponseEntity<Map<String, Object>> customerDash(
+            @RequestParam(defaultValue = "liangchang") String username,
+            @RequestParam(defaultValue = "liangchang") String password,
+            Model model) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<CameraListDTO> cameras = customerService.findAll();
+
+        response.put("cameras", cameras);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/camera/{id}")
-    public String cameraDetail(@PathVariable Long id,
-                               @RequestParam(defaultValue = "liangchang") String username,
-                               @RequestParam(defaultValue = "liangchang") String password,
-                               Model model) {
+    public ResponseEntity<CameraDTO> cameraDetail(@PathVariable Long id,
+                                                  @RequestParam(defaultValue = "liangchang") String username,
+                                                  @RequestParam(defaultValue = "liangchang") String password,
+                                                  Model model) {
         //System.out.println("Accessing camera detail for id: " + id + " as user: " + username);
         Optional<Camera> camera = customerService.findById(id);
         if (camera.isPresent()) {
@@ -55,10 +57,11 @@ public class CustomerController {
                 preferenceService.recordVisits(customer, camera.get().getTags());
                 //System.out.println("Recorded visit for customer: " + username + " to camera with multiple tags.");
             }
-            return "customer/cameraDetail";
+
+            return ResponseEntity.ok(new CameraDTO(camera.get(), customerService.findImageByCameraId(camera.get().getId())));
         } else {
             //System.out.println("Camera not found for id: " + id);
-            return "error";
+            return ResponseEntity.badRequest().build();
         }
     }
 }

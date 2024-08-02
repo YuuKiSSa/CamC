@@ -11,4 +11,6 @@ public interface CameraImageRepository extends JpaRepository<CameraImage, Long>{
 	@Query("select i.url from CameraImage i")
 	List<String> findAllURL();
 
+	@Query("select i.url from CameraImage i where i.camera.id = :camera_id")
+	String findUrlByCameraId(long camera_id);
 }

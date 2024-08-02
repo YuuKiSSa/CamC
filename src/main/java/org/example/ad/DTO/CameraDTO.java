@@ -1,32 +1,17 @@
-package org.example.ad.model;
-
-import jakarta.persistence.*;
+package org.example.ad.DTO;
+import org.example.ad.model.Brand;
+import org.example.ad.model.Camera;
+import org.example.ad.model.Category;
 
 import java.time.LocalDate;
-import java.util.List;
 
-@Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"brand", "model"})})
-public class Camera {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CameraDTO {
     private long id;
-
-    @Enumerated(EnumType.STRING)
     private Brand brand;
-
-    @Column(length = 30, nullable = false)
     private String model;
-
-    @Enumerated(EnumType.STRING)
     private Category category;
-
-    @Column(length = 500)
     private String description;
-
-    @Column(nullable = false)
     private LocalDate releaseTime;
-
     private double initialPrice;
     private double effectivePixel;
     private int ISO;
@@ -34,26 +19,25 @@ public class Camera {
     private int continuousShot;
     private int videoResolution;
     private int videoRate;
+    private String imageUrl;
 
-    @ManyToMany(mappedBy = "cameras")
-    private List<Tag> tags;
+    public CameraDTO(Camera camera, String url){
+        id = camera.getId();
+        brand = camera.getBrand();
+        model = camera.getModel();
+        category = camera.getCategory();
+        description = camera.getDescription();
+        releaseTime = camera.getReleaseTime();
+        initialPrice = camera.getInitialPrice();
+        effectivePixel = camera.getEffectivePixel();
+        ISO = camera.getISO();
+        focusPoint = camera.getFocusPoint();
+        continuousShot = camera.getContinuousShot();
+        videoRate = camera.getVideoRate();
+        videoResolution = camera.getVideoResolution();
+        this.imageUrl = url;
+    }
 
-    @OneToMany(mappedBy = "camera")
-    private List<Price> prices;
-
-    @OneToMany(mappedBy = "camera")
-    private List<Review> reviews;
-
-    @OneToMany(mappedBy = "camera")
-    private List<Favorite> favorites;
-
-    @OneToMany(mappedBy = "camera")
-    private List<CameraWebsite> cameraWebsites;
-
-    @OneToMany(mappedBy = "camera")
-    private List<CameraImage> cameraImages;
-
-    // Getters and setters
     public long getId() {
         return id;
     }
@@ -94,20 +78,20 @@ public class Camera {
         this.description = description;
     }
 
-    public double getInitialPrice() {
-        return initialPrice;
-    }
-
-    public void setInitialPrice(double initialPrice) {
-        this.initialPrice = initialPrice;
-    }
-
     public LocalDate getReleaseTime() {
         return releaseTime;
     }
 
     public void setReleaseTime(LocalDate releaseTime) {
         this.releaseTime = releaseTime;
+    }
+
+    public double getInitialPrice() {
+        return initialPrice;
+    }
+
+    public void setInitialPrice(double initialPrice) {
+        this.initialPrice = initialPrice;
     }
 
     public double getEffectivePixel() {
@@ -158,51 +142,11 @@ public class Camera {
         this.videoRate = videoRate;
     }
 
-    public List<Tag> getTags() {
-        return tags;
+    public String getUrl() {
+        return imageUrl;
     }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public List<CameraImage> getCameraImages() {
-        return cameraImages;
-    }
-
-    public void setCameraImages(List<CameraImage> cameraImages) {
-        this.cameraImages = cameraImages;
-    }
-
-    public List<Price> getPrices() {
-        return prices;
-    }
-
-    public void setPrices(List<Price> prices) {
-        this.prices = prices;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<Favorite> getFavorites() {
-        return favorites;
-    }
-
-    public void setFavorites(List<Favorite> favorites) {
-        this.favorites = favorites;
-    }
-
-    public List<CameraWebsite> getCameraWebsites() {
-        return cameraWebsites;
-    }
-
-    public void setCameraWebsites(List<CameraWebsite> cameraWebsites) {
-        this.cameraWebsites = cameraWebsites;
+    public void setUrl(String url) {
+        this.imageUrl = url;
     }
 }
