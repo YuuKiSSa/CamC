@@ -13,7 +13,7 @@ public class Customer {
     @Column(length = 20, nullable = false, unique = true)
     private String username;
 
-    @Column(length = 60, nullable = false)
+    @Column(length = 512, nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "customer")
