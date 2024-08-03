@@ -6,7 +6,8 @@ import org.example.ad.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api")
@@ -20,7 +21,7 @@ public class AccountController {
         Customer customer = accountService.login(loginDetails.getUsername(), loginDetails.getPassword());
         if (customer != null) {
             session.setAttribute("user", customer);
-            return ResponseEntity.ok().body("Logged in successfully");
+            return ResponseEntity.ok("Logged in successfully");
         } else {
             return ResponseEntity.status(401).body("Unauthorized - Incorrect username or password");
         }
@@ -39,7 +40,7 @@ public class AccountController {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpSession session) {
         try {
-            session.invalidate();
+            session.invalidate();  
             return ResponseEntity.ok("Logged out successfully");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Internal Server Error - Unable to log out");
