@@ -13,7 +13,7 @@ public class Customer {
     @Column(length = 20, nullable = false, unique = true)
     private String username;
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 60, nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "customer")
@@ -25,6 +25,16 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Review> reviews;
 
+    
+ // No-arg constructor
+    public Customer() {
+    }
+
+    // Constructor for initial required fields only
+    public Customer(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
     public long getId() {
         return id;
     }

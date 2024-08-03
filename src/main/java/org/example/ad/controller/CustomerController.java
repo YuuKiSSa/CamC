@@ -31,8 +31,7 @@ public class CustomerController {
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> customerDash(
             @RequestParam(defaultValue = "liangchang") String username,
-            @RequestParam(defaultValue = "liangchang") String password,
-            Model model) {
+            @RequestParam(defaultValue = "liangchang") String password) {
 
         Map<String, Object> response = new HashMap<>();
         List<CameraListDTO> cameras = customerService.findAll();
@@ -45,23 +44,17 @@ public class CustomerController {
     @GetMapping("/camera/{id}")
     public ResponseEntity<CameraDTO> cameraDetail(@PathVariable Long id,
                                                   @RequestParam(defaultValue = "liangchang") String username,
-                                                  @RequestParam(defaultValue = "liangchang") String password,
-                                                  Model model) {
-        //System.out.println("Accessing camera detail for id: " + id + " as user: " + username);
+                                                  @RequestParam(defaultValue = "liangchang") String password) {
         Optional<Camera> camera = customerService.findById(id);
         if (camera.isPresent()) {
-            model.addAttribute("camera", camera.get());
-
             Customer customer = customerService.findByUsername(username).orElse(null);
             if (customer != null && camera.get().getTags() != null && !camera.get().getTags().isEmpty()) {
                 preferenceService.recordVisits(customer, camera.get().getTags());
-                //System.out.println("Recorded visit for customer: " + username + " to camera with multiple tags.");
             }
-
             return ResponseEntity.ok(new CameraDTO(camera.get(), customerService.findImageByCameraId(camera.get().getId())));
         } else {
-            //System.out.println("Camera not found for id: " + id);
             return ResponseEntity.badRequest().build();
         }
     }
 }
+
