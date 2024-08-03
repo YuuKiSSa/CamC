@@ -1,4 +1,4 @@
-package org.example.ad.service;
+package org.example.ad.service.impl;
 
 import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.model.Camera;
@@ -8,6 +8,7 @@ import org.example.ad.repository.CameraImageRepository;
 import org.example.ad.repository.CameraRepository;
 import org.example.ad.repository.CustomerRepository;
 import org.example.ad.repository.TagRepository;
+import org.example.ad.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

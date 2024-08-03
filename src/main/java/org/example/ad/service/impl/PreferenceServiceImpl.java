@@ -1,10 +1,11 @@
-package org.example.ad.service;
+package org.example.ad.service.impl;
 
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Preference;
 import org.example.ad.model.Tag;
 import org.example.ad.repository.PreferenceRepository;
+import org.example.ad.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
