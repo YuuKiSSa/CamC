@@ -33,11 +33,6 @@ public class CustomerController {
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> customerDash(HttpSession session) {
 
-        Customer customer = (Customer) session.getAttribute("user");
-        if (customer == null) {
-            return ResponseEntity.status(401).body(null); 
-        }
-
         Map<String, Object> response = new HashMap<>();
         List<CameraListDTO> cameras = customerService.findAll();
 
@@ -50,12 +45,9 @@ public class CustomerController {
     public ResponseEntity<CameraDTO> cameraDetail(@PathVariable Long id, HttpSession session) {
 
         Customer customer = (Customer) session.getAttribute("user");
-        if (customer == null) {
-            return ResponseEntity.status(401).body(null);
-        }
 
         Optional<Camera> camera = customerService.findById(id);
-        if (camera.isPresent()) {
+        if (camera.isPresent() && customer!=null) {
             if (camera.get().getTags() != null && !camera.get().getTags().isEmpty()) {
                 preferenceService.recordVisits(customer, camera.get().getTags());
             }
