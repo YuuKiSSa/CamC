@@ -14,4 +14,6 @@ public interface PreferenceService {
 	List<Camera> findAllByPref(String username);
 
 	Long findMostPreferredCameraIdByCustomer(Long customerId);
+	
+	List<Camera> findTop3PreferredCamerasByCustomer(Long customerId);
 }

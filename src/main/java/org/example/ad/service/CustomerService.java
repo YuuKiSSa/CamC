@@ -22,4 +22,6 @@ public interface CustomerService {
 	Optional<Customer> findByUsername(String username);
 
 	String findImageByCameraId(Long id);
+	
+
 }

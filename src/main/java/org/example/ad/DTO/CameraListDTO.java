@@ -7,15 +7,16 @@ public class CameraListDTO {
     private long id;
     private Brand brand;
     private String model;
-    private double initialPrice;
+    private double initialPrice; 
+    private double latestPrice;   
     private String imageUrl;
 
     public CameraListDTO(Camera camera, String url){
-        id = camera.getId();
-        brand = camera.getBrand();
-        model = camera.getModel();
-        initialPrice = camera.getInitialPrice();
-        imageUrl = url;
+        this.id = camera.getId();
+        this.brand = camera.getBrand();
+        this.model = camera.getModel();
+        this.initialPrice = camera.getInitialPrice();
+        this.imageUrl = url;
     }
 
     public long getId() {
@@ -48,6 +49,14 @@ public class CameraListDTO {
 
     public void setInitialPrice(double initialPrice) {
         this.initialPrice = initialPrice;
+    }
+
+    public double getLatestPrice() {
+        return latestPrice;
+    }
+
+    public void setLatestPrice(double latestPrice) {
+        this.latestPrice = latestPrice;
     }
 
     public String getImageUrl() {

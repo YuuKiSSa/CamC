@@ -7,6 +7,7 @@ import org.example.ad.model.Tag;
 import org.example.ad.repository.CameraImageRepository;
 import org.example.ad.repository.CameraRepository;
 import org.example.ad.repository.CustomerRepository;
+import org.example.ad.repository.PriceRepository;
 import org.example.ad.repository.TagRepository;
 import org.example.ad.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,17 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CameraImageRepository cameraImageRepository;
 
+    @Autowired
+    private PriceRepository priceRepository;
 
     @Override
     public List<CameraListDTO> findAll() {
         return cameraRepository.findAll().stream()
                 .map(c -> {
-                    return new CameraListDTO(c, cameraImageRepository.findUrlByCameraId(c.getId()));
+                    CameraListDTO dto = new CameraListDTO(c, cameraImageRepository.findUrlByCameraId(c.getId()));
+                    Double latestPrice = priceRepository.findLatestLowestPriceByCameraId(c.getId());
+                    dto.setLatestPrice(latestPrice);
+                    return dto;
                 })
                 .toList();
     }
