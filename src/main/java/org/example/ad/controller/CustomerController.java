@@ -47,8 +47,8 @@ public class CustomerController {
         Customer customer = (Customer) session.getAttribute("user");
 
         Optional<Camera> camera = customerService.findById(id);
-        if (camera.isPresent() && customer!=null) {
-            if (camera.get().getTags() != null && !camera.get().getTags().isEmpty()) {
+        if (camera.isPresent()) {
+            if (camera.get().getTags() != null && !camera.get().getTags().isEmpty() && customer != null) {
                 preferenceService.recordVisits(customer, camera.get().getTags());
             }
             return ResponseEntity.ok(new CameraDTO(camera.get(), customerService.findImageByCameraId(camera.get().getId())));
