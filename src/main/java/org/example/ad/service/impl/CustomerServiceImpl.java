@@ -1,6 +1,7 @@
 package org.example.ad.service.impl;
 
 import org.example.ad.DTO.CameraListDTO;
+import org.example.ad.DTO.CameraListWithTagDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Tag;
@@ -37,6 +38,26 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(c -> {
                     CameraListDTO dto = new CameraListDTO(c, cameraImageRepository.findUrlByCameraId(c.getId()));
                     Double latestPrice = priceRepository.findLatestLowestPriceByCameraId(c.getId());
+                    dto.setLatestPrice(latestPrice);
+                    return dto;
+                })
+                .toList();
+    }
+    
+    @Override
+    public List<CameraListWithTagDTO> findAllWithTags() {
+        return cameraRepository.findAll().stream()
+                .map(c -> {
+                    // 获取标签名称列表
+                    List<String> tags = c.getTags().stream()
+                            .map(Tag::getCategory)
+                            .toList();
+
+                    // 获取最新最低价格
+                    Double latestPrice = priceRepository.findLatestLowestPriceByCameraId(c.getId());
+
+                    // 创建 CameraListWithTagDTO 并返回
+                    CameraListWithTagDTO dto = new CameraListWithTagDTO(c, cameraImageRepository.findUrlByCameraId(c.getId()), tags);
                     dto.setLatestPrice(latestPrice);
                     return dto;
                 })

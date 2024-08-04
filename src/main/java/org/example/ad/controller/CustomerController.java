@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.example.ad.DTO.CameraDTO;
 import org.example.ad.DTO.CameraListDTO;
+import org.example.ad.DTO.CameraListWithTagDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.CameraImage;
 import org.example.ad.model.Customer;
@@ -39,6 +40,12 @@ public class CustomerController {
         response.put("cameras", cameras);
 
         return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/list-tag")
+    public ResponseEntity<List<CameraListWithTagDTO>> listAllCamerasWithTags() {
+        List<CameraListWithTagDTO> camerasWithTags = customerService.findAllWithTags();
+        return ResponseEntity.ok(camerasWithTags);
     }
 
     @GetMapping("/camera/{id}")

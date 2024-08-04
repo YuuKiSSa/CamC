@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.example.ad.DTO.CameraListDTO;
+import org.example.ad.DTO.CameraListWithTagDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Tag;
@@ -23,5 +24,5 @@ public interface CustomerService {
 
 	String findImageByCameraId(Long id);
 	
-
+	List<CameraListWithTagDTO> findAllWithTags();
 }

@@ -34,4 +34,12 @@ public class Tag {
     public void setCategory(String category) {
         this.category = category;
     }
+    
+    public List<Camera> getCameras() {
+        return cameras;
+    }
+
+    public void setCameras(List<Camera> cameras) {
+        this.cameras = cameras;
+    }
 }
