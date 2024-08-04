@@ -28,7 +28,6 @@ public class CameraMainDetailServiceImpl implements CameraMainDetailService {
             MainDetailDTO mainDetailDTO = new MainDetailDTO();
             mainDetailDTO.setProductName(camera.getBrand().name() + " " + camera.getModel());
 
-            // 计算平均评分
             List<Review> reviews = camera.getReviews();
             double averageRate = reviews.stream()
                                         .mapToDouble(Review::getRate)
@@ -38,14 +37,14 @@ public class CameraMainDetailServiceImpl implements CameraMainDetailService {
                                                       .setScale(1, RoundingMode.HALF_UP);
             mainDetailDTO.setAverageRate(averageRateRounded.doubleValue());
 
-            // 获取最低价格
             double lowestPrice = camera.getPrices().stream()
                                        .mapToDouble(Price::getPrice)
                                        .min()
                                        .orElse(0.0);
             mainDetailDTO.setLowestPrice(lowestPrice);
 
-            // 获取相机的第一个图片链接
+            mainDetailDTO.setInitialPrice(camera.getInitialPrice());
+
             String imageUrl = camera.getCameraImages().stream()
                                     .findFirst()
                                     .map(image -> image.getUrl())

@@ -4,9 +4,9 @@ public class MainDetailDTO {
     private String productName;
     private double averageRate;
     private double lowestPrice;
+    private double initialPrice; 
     private String imageUrl;
 
-    // Getters and setters
     public String getProductName() {
         return productName;
     }
@@ -29,6 +29,14 @@ public class MainDetailDTO {
 
     public void setLowestPrice(double lowestPrice) {
         this.lowestPrice = lowestPrice;
+    }
+
+    public double getInitialPrice() {
+        return initialPrice;
+    }
+
+    public void setInitialPrice(double initialPrice) {
+        this.initialPrice = initialPrice;
     }
 
     public String getImageUrl() {

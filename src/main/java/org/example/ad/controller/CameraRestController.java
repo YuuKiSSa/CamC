@@ -78,11 +78,6 @@ public class CameraRestController {
 	    return ResponseEntity.ok(cameraDTO);
 	}
 
-
-
-
-
-
 	@GetMapping("/details/{id}")
 	public ResponseEntity<?> getCameraDetails(@PathVariable Long id) {
 		CameraDetailDTO cameraDetails = cameraDetailService.getCameraDetails(id);
