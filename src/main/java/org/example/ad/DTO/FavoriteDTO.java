@@ -20,4 +20,5 @@ public class FavoriteDTO {
     public void setIdealPrice(Double idealPrice) {
         this.idealPrice = idealPrice;
     }
+    
 }
