@@ -12,13 +12,15 @@ import org.example.ad.DTO.CameraListWithTagDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.CameraImage;
 import org.example.ad.model.Customer;
+import org.example.ad.model.Favorite;
 import org.example.ad.model.Price;
+import org.example.ad.repository.FavoriteRepository;
 import org.example.ad.service.CustomerService;
 import org.example.ad.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.example.ad.DTO.FavoriteDTO;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -31,6 +33,7 @@ public class CustomerController {
     @Autowired
     private PreferenceService preferenceService;
 
+    
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> customerDash(HttpSession session) {
 
@@ -99,6 +102,43 @@ public class CustomerController {
         }
     }
 
+    @PostMapping("/favorite/add")
+    public ResponseEntity<?> addFavorite(@RequestBody FavoriteDTO favoriteDTO, HttpSession session) {
+        Customer currentUser = (Customer) session.getAttribute("user");
 
+        if (currentUser == null) {
+            return ResponseEntity.status(401).body("Unauthorized - No user logged in");
+        }
 
+        try {
+            Favorite favorite = customerService.addFavorite(currentUser.getId(), favoriteDTO.getCameraId(), favoriteDTO.getIdealPrice());
+            return ResponseEntity.ok(favorite);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/favorite/delete")
+    public ResponseEntity<?> deleteFavorite(@RequestBody FavoriteDTO favoriteDTO, HttpSession session) {
+        Customer currentUser = (Customer) session.getAttribute("user");
+        if (currentUser == null) {
+            return ResponseEntity.status(401).body("Unauthorized - No user logged in");
+        }
+
+        customerService.deleteFavorite(currentUser.getId(), favoriteDTO.getCameraId());
+
+        return ResponseEntity.ok("Deleted from favorites");
+    }
+
+    @GetMapping("/favorite")
+    public ResponseEntity<List<FavoriteDTO>> getFavorites(HttpSession session) {
+        Customer currentUser = (Customer) session.getAttribute("user");
+
+        if (currentUser == null) {
+            return ResponseEntity.status(401).body(null);
+        }
+
+        List<FavoriteDTO> favorites = customerService.findFavoritesByCustomerId(currentUser.getId());
+        return ResponseEntity.ok(favorites);
+    }
 }

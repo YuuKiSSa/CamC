@@ -10,6 +10,7 @@ public class CameraListDTO {
     private double initialPrice; 
     private double latestPrice;   
     private String imageUrl;
+    private double averageRate;
 
     public CameraListDTO(Camera camera, String url){
         this.id = camera.getId();
@@ -65,5 +66,13 @@ public class CameraListDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    
+    public double getAverageRate() {
+        return averageRate;
+    }
+
+    public void setAverageRate(double averageRate) {
+        this.averageRate = averageRate;
     }
 }
