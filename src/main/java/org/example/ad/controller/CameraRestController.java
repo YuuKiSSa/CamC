@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.example.ad.DTO.CameraDetailDTO;
 import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.DTO.MainDetailDTO;
+import org.example.ad.DTO.MinPriceDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Price;
@@ -95,6 +96,16 @@ public class CameraRestController {
             return ResponseEntity.ok(mainDetails);
         } else {
             return ResponseEntity.status(404).body("Camera not found");
+        }
+    }
+	
+	@GetMapping("/minPrice/{cameraId}")
+    public ResponseEntity<MinPriceDTO> getMinPrice(@PathVariable Long cameraId) {
+        MinPriceDTO minPrice = cameraDetailService.findMinPriceByCameraId(cameraId);
+        if (minPrice != null) {
+            return ResponseEntity.ok(minPrice);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
