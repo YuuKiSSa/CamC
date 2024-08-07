@@ -8,6 +8,7 @@ import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.DTO.MainDetailDTO;
 import org.example.ad.DTO.MinPriceDTO;
 import org.example.ad.model.Camera;
+import org.example.ad.model.CameraImage;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Price;
 import org.example.ad.service.CameraDetailService;
@@ -42,13 +43,13 @@ public class CameraRestController {
 	@GetMapping("/cameras/most-preferred")
 	public ResponseEntity<?> getMostPreferredCamera(HttpSession session) {
 	    Customer currentUser = (Customer) session.getAttribute("user");
-	    
+
 	    if (currentUser == null) {
 	        return ResponseEntity.status(401).body("Unauthorized - No user logged in");
 	    }
 
 	    Long cameraId = preferenceService.findMostPreferredCameraIdByCustomer(currentUser.getId());
-	    
+
 	    if (cameraId == null) {
 	        return ResponseEntity.notFound().build();
 	    }
@@ -60,7 +61,10 @@ public class CameraRestController {
 
 	    Camera camera = cameraOpt.get();
 
-	    String imageUrl = customerService.findImageByCameraId(camera.getId());
+	    String imageUrl = camera.getCameraImages().stream()
+	                            .findFirst()
+	                            .map(CameraImage::getUrl)
+	                            .orElse(""); 
 
 	    Double latestLowestPrice = camera.getPrices().stream()
 	            .filter(p -> p.getTime().equals(
@@ -78,6 +82,7 @@ public class CameraRestController {
 
 	    return ResponseEntity.ok(cameraDTO);
 	}
+
 
 	@GetMapping("/details/{id}")
 	public ResponseEntity<?> getCameraDetails(@PathVariable Long id) {

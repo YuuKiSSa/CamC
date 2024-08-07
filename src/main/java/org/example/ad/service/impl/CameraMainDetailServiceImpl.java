@@ -2,6 +2,7 @@ package org.example.ad.service.impl;
 
 import org.example.ad.DTO.MainDetailDTO;
 import org.example.ad.model.Camera;
+import org.example.ad.model.CameraImage;
 import org.example.ad.model.Price;
 import org.example.ad.model.Review;
 import org.example.ad.repository.CameraRepository;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CameraMainDetailServiceImpl implements CameraMainDetailService {
@@ -45,14 +47,14 @@ public class CameraMainDetailServiceImpl implements CameraMainDetailService {
 
             mainDetailDTO.setInitialPrice(camera.getInitialPrice());
 
-            String imageUrl = camera.getCameraImages().stream()
-                                    .findFirst()
-                                    .map(image -> image.getUrl())
-                                    .orElse("");
-            mainDetailDTO.setImageUrl(imageUrl);
+            List<String> imageUrls = camera.getCameraImages().stream()
+                                            .map(CameraImage::getUrl)
+                                            .collect(Collectors.toList());
+            mainDetailDTO.setImageUrls(imageUrls); 
 
             return mainDetailDTO;
         }
         return null;
     }
 }
+

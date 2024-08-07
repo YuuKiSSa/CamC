@@ -1,11 +1,13 @@
 package org.example.ad.DTO;
 
+import java.util.List;
+
 public class MainDetailDTO {
     private String productName;
     private double averageRate;
     private double lowestPrice;
     private double initialPrice; 
-    private String imageUrl;
+    private List<String> imageUrls;  
 
     public String getProductName() {
         return productName;
@@ -39,11 +41,11 @@ public class MainDetailDTO {
         this.initialPrice = initialPrice;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }

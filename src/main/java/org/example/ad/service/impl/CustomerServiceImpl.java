@@ -4,6 +4,7 @@ import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.DTO.CameraListWithTagDTO;
 import org.example.ad.DTO.FavoriteDTO;
 import org.example.ad.model.Camera;
+import org.example.ad.model.CameraImage;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Favorite;
 import org.example.ad.model.Review;
@@ -46,7 +47,12 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CameraListDTO> findAll() {
         return cameraRepository.findAll().stream()
                 .map(camera -> {
-                    CameraListDTO dto = new CameraListDTO(camera, cameraImageRepository.findUrlByCameraId(camera.getId()));
+                    String imageUrl = camera.getCameraImages().stream()
+                                            .findFirst() 
+                                            .map(CameraImage::getUrl)
+                                            .orElse(""); 
+
+                    CameraListDTO dto = new CameraListDTO(camera, imageUrl);
 
                     List<Review> reviews = camera.getReviews();
                     double averageRate = reviews.stream()
@@ -65,6 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .toList();
     }
 
+
     
     @Override
     public List<CameraListWithTagDTO> findAllWithTags() {
@@ -73,10 +80,15 @@ public class CustomerServiceImpl implements CustomerService {
                     List<String> tags = c.getTags().stream()
                             .map(Tag::getCategory)
                             .toList();
-
+                    
+                    String imageUrl = c.getCameraImages().stream()
+                            .findFirst()
+                            .map(CameraImage::getUrl)
+                            .orElse("");
+                    
                     Double latestPrice = priceRepository.findLatestLowestPriceByCameraId(c.getId());
 
-                    CameraListWithTagDTO dto = new CameraListWithTagDTO(c, cameraImageRepository.findUrlByCameraId(c.getId()), tags);
+                    CameraListWithTagDTO dto = new CameraListWithTagDTO(c, imageUrl, tags);
                     dto.setLatestPrice(latestPrice);
                     return dto;
                 })
@@ -94,10 +106,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public String findImageByCameraId(Long id){
-        return cameraImageRepository.findUrlByCameraId(id);
+    public String findImageByCameraId(Long id) {
+        return cameraRepository.findById(id)
+                .flatMap(camera -> camera.getCameraImages().stream().findFirst())
+                .map(CameraImage::getUrl)
+                .orElse(""); 
     }
-    
 
     @Override
     public Favorite addFavorite(Long customerId, Long cameraId, Double idealPrice) {

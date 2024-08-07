@@ -6,7 +6,6 @@ public class PriceDTO {
     private String platform;
     private List<PriceDetailDTO> details;
 
-    // Constructors
     public PriceDTO() {}
 
     public PriceDTO(String platform, List<PriceDetailDTO> details) {
@@ -14,7 +13,6 @@ public class PriceDTO {
         this.details = details;
     }
 
-    // Getters and Setters
     public String getPlatform() {
         return platform;
     }
