@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.example.ad.DTO.CameraDTO;
 import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.DTO.CameraListWithTagDTO;
+import org.example.ad.DTO.FavoriteCameraDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.CameraImage;
 import org.example.ad.model.Customer;
@@ -164,4 +165,15 @@ public class CustomerController {
         List<FavoriteDTO> favorites = customerService.findFavoritesByCustomerId(currentUser.getId());
         return ResponseEntity.ok(favorites);
     }
+    
+    @GetMapping("/favorites-details")
+    public ResponseEntity<List<FavoriteCameraDTO>> getFavoriteCamerasDetails(HttpSession session) {
+        Customer currentUser = (Customer) session.getAttribute("user");
+        if (currentUser == null) {
+            return ResponseEntity.status(401).build();
+        }
+        List<FavoriteCameraDTO> favoriteCameras = customerService.findFavoriteCamerasByCustomerId(currentUser.getId());
+        return ResponseEntity.ok(favoriteCameras);
+    }
+
 }

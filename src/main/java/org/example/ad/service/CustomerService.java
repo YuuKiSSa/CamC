@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.DTO.CameraListWithTagDTO;
+import org.example.ad.DTO.FavoriteCameraDTO;
 import org.example.ad.DTO.FavoriteDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.Customer;
@@ -33,4 +34,7 @@ public interface CustomerService {
 	void deleteFavorite(Long customerId, Long cameraId);
 	
 	List<FavoriteDTO> findFavoritesByCustomerId(Long customerId);
+	
+	List<FavoriteCameraDTO> findFavoriteCamerasByCustomerId(Long customerId);
+
 }

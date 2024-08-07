@@ -2,6 +2,7 @@ package org.example.ad.service.impl;
 
 import org.example.ad.DTO.CameraListDTO;
 import org.example.ad.DTO.CameraListWithTagDTO;
+import org.example.ad.DTO.FavoriteCameraDTO;
 import org.example.ad.DTO.FavoriteDTO;
 import org.example.ad.model.Camera;
 import org.example.ad.model.CameraImage;
@@ -147,4 +148,27 @@ public class CustomerServiceImpl implements CustomerService {
                 })
                 .toList();
     }
+    
+    @Override
+    public List<FavoriteCameraDTO> findFavoriteCamerasByCustomerId(Long customerId) {
+        List<Favorite> favorites = favoriteRepository.findByCustomerId(customerId);
+        return favorites.stream()
+                .map(favorite -> {
+                    Camera camera = favorite.getCamera();
+                    String imageUrl = camera.getCameraImages().stream()
+                            .findFirst()
+                            .map(CameraImage::getUrl)
+                            .orElse("");
+
+                    return new FavoriteCameraDTO(
+                            camera.getId(),
+                            camera.getBrand(),
+                            camera.getModel(),
+                            favorite.getIdealPrice(),
+                            imageUrl
+                    );
+                })
+                .toList();
+    }
+
 }
