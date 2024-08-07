@@ -1,5 +1,7 @@
 package org.example.ad.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.example.ad.model.CameraImage;
 import org.example.ad.model.Customer;
 import org.example.ad.model.Favorite;
 import org.example.ad.model.Price;
+import org.example.ad.model.Review;
 import org.example.ad.repository.FavoriteRepository;
 import org.example.ad.service.CustomerService;
 import org.example.ad.service.PreferenceService;
@@ -75,7 +78,23 @@ public class CustomerController {
 
             List<CameraListDTO> likedCamerasDTOs = likedCameras.stream()
                     .map(camera -> {
-                        CameraListDTO dto = new CameraListDTO(camera, camera.getCameraImages().stream().findFirst().map(CameraImage::getUrl).orElse(""));
+                        String imageUrl = camera.getCameraImages().stream()
+                                                .findFirst()
+                                                .map(CameraImage::getUrl)
+                                                .orElse(""); 
+
+                        CameraListDTO dto = new CameraListDTO(camera, imageUrl);
+
+                        List<Review> reviews = camera.getReviews();
+                        double averageRate = reviews.stream()
+                                                    .mapToDouble(Review::getRate)
+                                                    .average()
+                                                    .orElse(0.0);
+
+                        double averageRateRounded = BigDecimal.valueOf(averageRate)
+                                                              .setScale(1, RoundingMode.HALF_UP)
+                                                              .doubleValue();
+                        dto.setAverageRate(averageRateRounded);
 
                         Double latestLowestPrice = camera.getPrices().stream()
                                 .filter(p -> p.getTime().equals(
@@ -101,6 +120,10 @@ public class CustomerController {
             return ResponseEntity.status(401).build();
         }
     }
+
+
+
+
 
     @PostMapping("/favorite/add")
     public ResponseEntity<?> addFavorite(@RequestBody FavoriteDTO favoriteDTO, HttpSession session) {
