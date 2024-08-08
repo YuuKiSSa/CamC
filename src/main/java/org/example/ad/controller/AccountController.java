@@ -1,8 +1,11 @@
 package org.example.ad.controller;
 
 import org.example.ad.DTO.LoginDTO;
+import org.example.ad.DTO.AdminLoginDTO;
+import org.example.ad.model.Admin;
 import org.example.ad.model.Customer;
 import org.example.ad.service.AccountService;
+import org.example.ad.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,9 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AdminService adminService;
+    
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDetails, HttpSession session) {
         Customer customer = accountService.login(loginDetails.getUsername(), loginDetails.getPassword());
@@ -27,6 +33,17 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/admin-login")
+    public ResponseEntity<?> adminLogin(@RequestBody AdminLoginDTO loginDetails, HttpSession session) {
+        Admin admin = adminService.login(loginDetails.getId(), loginDetails.getPassword());
+        if (admin != null) {
+            session.setAttribute("admin", admin);
+            return ResponseEntity.ok("Admin logged in successfully");
+        } else {
+            return ResponseEntity.status(401).body("Unauthorized - Incorrect admin ID or password");
+        }
+    }
+    
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody LoginDTO registrationDetails) {
         Customer customer = accountService.register(registrationDetails.getUsername(), registrationDetails.getPassword());
