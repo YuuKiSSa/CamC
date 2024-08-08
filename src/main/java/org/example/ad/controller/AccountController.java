@@ -37,7 +37,7 @@ public class AccountController {
     public ResponseEntity<?> adminLogin(@RequestBody AdminLoginDTO loginDetails, HttpSession session) {
         Admin admin = adminService.login(loginDetails.getId(), loginDetails.getPassword());
         if (admin != null) {
-            session.setAttribute("admin", admin);
+            session.setAttribute("user", admin);
             return ResponseEntity.ok("Admin logged in successfully");
         } else {
             return ResponseEntity.status(401).body("Unauthorized - Incorrect admin ID or password");
@@ -66,7 +66,8 @@ public class AccountController {
 
     @GetMapping("/current-user")
     public ResponseEntity<?> getCurrentUser(HttpSession session) {
-        Customer currentUser = (Customer) session.getAttribute("user");
+        Object currentUser = session.getAttribute("user");
+
         if (currentUser != null) {
             return ResponseEntity.ok(currentUser);
         } else {
