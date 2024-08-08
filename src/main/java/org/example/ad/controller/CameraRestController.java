@@ -73,6 +73,19 @@ public class CameraRestController {
         return ResponseEntity.ok("Camera deleted successfully");
     }
 
+    
+    @PostMapping("/update-camera/{id}")
+    public ResponseEntity<?> updateCamera(@PathVariable Long id, @RequestBody CameraDetailDTO cameraDetailDTO, HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("user");
+
+        if (admin == null) {
+            return ResponseEntity.status(401).body("Unauthorized - Admin login required");
+        }
+
+        Camera updatedCamera = cameraService.updateCamera(id, cameraDetailDTO);
+        return ResponseEntity.ok(updatedCamera);
+    }
+    
 	@GetMapping("/cameras/most-preferred")
 	public ResponseEntity<?> getMostPreferredCamera(HttpSession session) {
 		Customer currentUser = (Customer) session.getAttribute("user");

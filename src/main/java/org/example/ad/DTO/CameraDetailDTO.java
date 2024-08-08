@@ -19,7 +19,6 @@ public class CameraDetailDTO {
     private int videoResolution;
     private int videoRate;
 
-    // Getters and setters for each field
     public String getBrand() {
         return brand;
     }

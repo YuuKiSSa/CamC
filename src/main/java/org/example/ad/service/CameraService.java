@@ -1,9 +1,13 @@
 package org.example.ad.service;
 
 import org.example.ad.DTO.CameraAddDTO;
+import org.example.ad.DTO.CameraDetailDTO;
 import org.example.ad.model.Camera;
 
 public interface CameraService {
-    Camera addCamera(CameraAddDTO cameraAddDTO);
-    void deleteCamera(Long cameraId);
+	Camera addCamera(CameraAddDTO cameraAddDTO);
+
+	void deleteCamera(Long cameraId);
+
+	Camera updateCamera(Long id, CameraDetailDTO cameraDetailDTO);
 }

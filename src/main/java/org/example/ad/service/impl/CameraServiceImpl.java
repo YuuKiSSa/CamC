@@ -2,6 +2,7 @@ package org.example.ad.service.impl;
 
 import org.example.ad.DTO.AddPriceDTO;
 import org.example.ad.DTO.CameraAddDTO;
+import org.example.ad.DTO.CameraDetailDTO;
 import org.example.ad.DTO.CameraWebsiteDTO;
 import org.example.ad.DTO.PriceDTO;
 import org.example.ad.DTO.PriceDetailDTO;
@@ -15,6 +16,7 @@ import org.example.ad.service.CameraService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CameraServiceImpl implements CameraService {
@@ -78,5 +80,30 @@ public class CameraServiceImpl implements CameraService {
     @Override
     public void deleteCamera(Long cameraId) {
         cameraRepository.deleteById(cameraId);
+    }
+    
+    @Override
+    public Camera updateCamera(Long id, CameraDetailDTO cameraDetailDTO) {
+        Optional<Camera> cameraOptional = cameraRepository.findById(id);
+
+        if (cameraOptional.isPresent()) {
+            Camera camera = cameraOptional.get();
+            camera.setBrand(Brand.valueOf(cameraDetailDTO.getBrand()));
+            camera.setModel(cameraDetailDTO.getModel());
+            camera.setCategory(Category.valueOf(cameraDetailDTO.getCategory()));
+            camera.setDescription(cameraDetailDTO.getDescription());
+            camera.setReleaseTime(cameraDetailDTO.getReleaseTime());
+            camera.setInitialPrice(cameraDetailDTO.getInitialPrice());
+            camera.setEffectivePixel(cameraDetailDTO.getEffectivePixel());
+            camera.setISO(cameraDetailDTO.getISO());
+            camera.setFocusPoint(cameraDetailDTO.getFocusPoint());
+            camera.setContinuousShot(cameraDetailDTO.getContinuousShot());
+            camera.setVideoResolution(cameraDetailDTO.getVideoResolution());
+            camera.setVideoRate(cameraDetailDTO.getVideoRate());
+
+            return cameraRepository.save(camera);
+        } else {
+            throw new RuntimeException("Camera not found with id: " + id);
+        }
     }
 }
