@@ -51,7 +51,7 @@ public class CameraRestController {
 
 	@PostMapping("/add-camera")
     public ResponseEntity<?> addCamera(@RequestBody CameraAddDTO cameraAddDTO, HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("admin");
+        Admin admin = (Admin) session.getAttribute("user");
 
         if (admin == null) {
             return ResponseEntity.status(401).body("Unauthorized - Admin login required");
@@ -63,7 +63,7 @@ public class CameraRestController {
 
     @DeleteMapping("/delete-camera/{id}")
     public ResponseEntity<?> deleteCamera(@PathVariable Long id, HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("admin");
+        Admin admin = (Admin) session.getAttribute("user");
 
         if (admin == null) {
             return ResponseEntity.status(401).body("Unauthorized - Admin login required");

@@ -3,6 +3,8 @@ package org.example.ad.DTO;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.example.ad.model.Price;
+
 public class CameraAddDTO {
     private String brand;
     private String model;
@@ -18,7 +20,8 @@ public class CameraAddDTO {
     private int videoRate;
     private List<String> imageUrls; 
     private List<CameraWebsiteDTO> websites; 
-
+    private List<AddPriceDTO> prices;
+    
     public String getBrand() {
         return brand;
     }
@@ -129,5 +132,13 @@ public class CameraAddDTO {
 
     public void setWebsites(List<CameraWebsiteDTO> websites) {
         this.websites = websites;
+    }
+    
+    public List<AddPriceDTO> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(List<AddPriceDTO> prices) {
+        this.prices = prices;
     }
 }

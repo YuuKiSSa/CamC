@@ -2,9 +2,10 @@ package org.example.ad.DTO;
 
 import java.time.LocalDate;
 
-public class PriceHistoryDetailDTO {
-    private LocalDate date;  
+public class AddPriceDTO {
+    private LocalDate date;
     private double price;
+    private String platform;
 
     public LocalDate getDate() {
         return date;
@@ -20,5 +21,13 @@ public class PriceHistoryDetailDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 }

@@ -1,7 +1,10 @@
 package org.example.ad.service.impl;
 
+import org.example.ad.DTO.AddPriceDTO;
 import org.example.ad.DTO.CameraAddDTO;
 import org.example.ad.DTO.CameraWebsiteDTO;
+import org.example.ad.DTO.PriceDTO;
+import org.example.ad.DTO.PriceDetailDTO;
 import org.example.ad.model.*;
 import org.example.ad.repository.CameraRepository;
 import org.example.ad.repository.CameraWebsiteRepository;
@@ -32,8 +35,6 @@ public class CameraServiceImpl implements CameraService {
         camera.setReleaseTime(cameraAddDTO.getReleaseTime());
         camera.setInitialPrice(cameraAddDTO.getInitialPrice());
         camera.setEffectivePixel(cameraAddDTO.getEffectivePixel());
-        System.out.println("ISO from DTO: " + cameraAddDTO.getISO());
-
         camera.setISO(cameraAddDTO.getISO());
         camera.setFocusPoint(cameraAddDTO.getFocusPoint());
         camera.setContinuousShot(cameraAddDTO.getContinuousShot());
@@ -58,6 +59,18 @@ public class CameraServiceImpl implements CameraService {
             cameraWebsites.add(website);
         }
         camera.setCameraWebsites(cameraWebsites);
+        
+        List<Price> prices = new ArrayList<>();
+        for (AddPriceDTO priceDTO : cameraAddDTO.getPrices()) {
+            Price price = new Price();
+            price.setTime(priceDTO.getDate());
+            price.setPrice(priceDTO.getPrice());
+            price.setPlatform(Platform.valueOf(priceDTO.getPlatform()));
+            price.setCamera(camera);
+            prices.add(price);
+        }
+        camera.setPrices(prices);
+
 
         return cameraRepository.save(camera);
     }

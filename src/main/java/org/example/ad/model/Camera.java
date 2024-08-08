@@ -53,10 +53,8 @@ public class Camera {
 	private List<CameraWebsite> cameraWebsites;
 
 	@OneToMany(mappedBy = "camera", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
 	private List<CameraImage> cameraImages;
 
-	// Getters and setters
 	public long getId() {
 		return id;
 	}
