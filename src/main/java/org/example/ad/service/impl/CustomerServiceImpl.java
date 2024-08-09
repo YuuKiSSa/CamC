@@ -160,12 +160,15 @@ public class CustomerServiceImpl implements CustomerService {
                             .map(CameraImage::getUrl)
                             .orElse("");
 
+                    Double latestPrice = priceRepository.findLatestLowestPriceByCameraId(camera.getId());
+                    
                     return new FavoriteCameraDTO(
                             camera.getId(),
                             camera.getBrand(),
                             camera.getModel(),
                             favorite.getIdealPrice(),
-                            imageUrl
+                            imageUrl,
+                            latestPrice != null ? latestPrice : 0.0 
                     );
                 })
                 .toList();
