@@ -8,7 +8,6 @@ public class ReviewDetailDTO {
     private String comment;
     private LocalDateTime date;
 
-    // Getters and setters
     public String getUserName() {
         return userName;
     }

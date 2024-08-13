@@ -4,7 +4,6 @@ public class FavoriteDTO {
     private Long cameraId;
     private Double idealPrice;
 
-    // Getters and setters
     public Long getCameraId() {
         return cameraId;
     }

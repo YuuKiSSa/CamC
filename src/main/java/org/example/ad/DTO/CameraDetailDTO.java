@@ -13,7 +13,7 @@ public class CameraDetailDTO {
     private LocalDate releaseTime;
     private double initialPrice;
     private double effectivePixel;
-    private int ISO;
+    private int iso;
     private Integer focusPoint;
     private int continuousShot;
     private int videoResolution;
@@ -76,11 +76,11 @@ public class CameraDetailDTO {
     }
 
     public int getISO() {
-        return ISO;
+        return iso;
     }
 
     public void setISO(int ISO) {
-        this.ISO = ISO;
+        this.iso = ISO;
     }
 
     public Integer getFocusPoint() {

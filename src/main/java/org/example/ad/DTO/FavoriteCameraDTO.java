@@ -8,14 +8,16 @@ public class FavoriteCameraDTO {
     private String model;
     private double idealPrice;
     private String imageUrl;
+    private double latestPrice;
 
 
-    public FavoriteCameraDTO(long id, Brand brand, String model, double idealPrice, String imageUrl) {
+    public FavoriteCameraDTO(long id, Brand brand, String model, double idealPrice, String imageUrl, double latestPrice) {
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.idealPrice = idealPrice;
         this.imageUrl = imageUrl;
+        this.latestPrice = latestPrice;
     }
 
     public long getId() {
@@ -56,5 +58,13 @@ public class FavoriteCameraDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    
+    public double getLatestPrice() {
+        return latestPrice;
+    }
+
+    public void setLatestPrice(double latestPrice) {
+        this.latestPrice = latestPrice;
     }
 }
