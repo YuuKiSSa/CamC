@@ -74,11 +74,28 @@ public class ReviewServiceImpl implements ReviewService {
 	    Review review = reviewRepository.findById(reviewId)
 	            .orElseThrow(() -> new IllegalArgumentException("Review not found"));
 
-	    if (review.getCustomer().getId() != customerId) {
-	        throw new IllegalArgumentException("Unauthorized to delete this review");
+	    if (review.getCustomer().getId() == customerId) { 
+	        reviewRepository.delete(review);
+	    } else {
+	        throw new IllegalArgumentException("You are not authorized to delete this review");
 	    }
-
-	    reviewRepository.delete(review);
 	}
 
+	@Override
+    public void deleteReviewAsAdmin(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("Review not found"));
+
+        reviewRepository.delete(review);
+    }
+
+	@Override
+    public List<Review> findAllReviews() {
+        return reviewRepository.findAll();
+    }
+
+    @Override
+    public List<Review> findReviewsByCustomerId(Long customerId) {
+        return reviewRepository.findByCustomerId(customerId);
+    }
 }

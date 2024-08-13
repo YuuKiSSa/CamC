@@ -12,4 +12,10 @@ public interface ReviewService {
     Review addReview(ReviewAddDTO reviewAddDTO, Long customerId);
     
     void deleteReview(Long reviewId, Long customerId);
+    
+    List<Review> findAllReviews();
+    
+    List<Review> findReviewsByCustomerId(Long customerId);
+    
+    void deleteReviewAsAdmin(Long reviewId);
 }
