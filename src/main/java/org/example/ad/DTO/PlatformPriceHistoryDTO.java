@@ -6,7 +6,6 @@ public class PlatformPriceHistoryDTO {
     private String platform;
     private List<PriceHistoryDetailDTO> history;
 
-    // Getters and setters
     public String getPlatform() {
         return platform;
     }

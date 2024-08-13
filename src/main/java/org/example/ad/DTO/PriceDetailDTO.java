@@ -5,7 +5,6 @@ public class PriceDetailDTO {
     private double price;
     private String link;
 
-    // Constructors
     public PriceDetailDTO() {}
 
     public PriceDetailDTO(String productName, double price, String link) {
@@ -14,7 +13,6 @@ public class PriceDetailDTO {
         this.link = link;
     }
 
-    // Getters and Setters
     public String getProductName() {
         return productName;
     }

@@ -4,7 +4,6 @@ public class MinPriceDTO {
     private String platform;
     private double price;
 
-    // Getters and setters
     public String getPlatform() {
         return platform;
     }
