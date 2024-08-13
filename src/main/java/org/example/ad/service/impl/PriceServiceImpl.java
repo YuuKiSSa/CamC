@@ -23,7 +23,6 @@ public class PriceServiceImpl implements PriceService {
     public List<PriceDTO> getPricesByCameraId(Long cameraId) {
         List<Price> prices = priceRepository.findByCameraId(cameraId);
 
-        // 按平台分组价格信息
         Map<Platform, List<Price>> groupedByPlatform = prices.stream()
                 .collect(Collectors.groupingBy(Price::getPlatform));
 
@@ -35,7 +34,6 @@ public class PriceServiceImpl implements PriceService {
                     .map(price -> {
                         String productName = price.getCamera().getBrand().name() + " " + price.getCamera().getModel();
 
-                        // 获取相机的对应平台的链接
                         String websiteLink = price.getCamera().getCameraWebsites().stream()
                                 .filter(cameraWebsite -> cameraWebsite.getPlatform() == platform)
                                 .findFirst()

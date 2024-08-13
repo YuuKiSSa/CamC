@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PriceService {
     List<PriceDTO> getPricesByCameraId(Long cameraId);
+    
 }

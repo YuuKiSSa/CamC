@@ -18,13 +18,15 @@ import org.example.ad.model.Customer;
 import org.example.ad.model.Favorite;
 import org.example.ad.model.Price;
 import org.example.ad.model.Review;
-import org.example.ad.repository.FavoriteRepository;
 import org.example.ad.service.CustomerService;
 import org.example.ad.service.PreferenceService;
+import org.example.ad.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.example.ad.DTO.FavoriteDTO;
+import org.example.ad.DTO.ReviewAddDTO;
+
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -37,6 +39,8 @@ public class CustomerController {
     @Autowired
     private PreferenceService preferenceService;
 
+    @Autowired
+    private ReviewService reviewService;
     
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> customerDash(HttpSession session) {
@@ -174,6 +178,33 @@ public class CustomerController {
         }
         List<FavoriteCameraDTO> favoriteCameras = customerService.findFavoriteCamerasByCustomerId(currentUser.getId());
         return ResponseEntity.ok(favoriteCameras);
+    }
+    
+    @PostMapping("/add-review")
+    public ResponseEntity<?> addReview(@RequestBody ReviewAddDTO reviewAddDTO, HttpSession session) {
+        Customer currentUser = (Customer) session.getAttribute("user");
+        if (currentUser == null) {
+            return ResponseEntity.status(401).body("Unauthorized - No user logged in");
+        }
+
+        Review review = reviewService.addReview(reviewAddDTO, currentUser.getId());
+        return ResponseEntity.ok(review);
+    }
+    
+    @DeleteMapping("/delete-review/{reviewId}")
+    public ResponseEntity<?> deleteReview(@PathVariable Long reviewId, HttpSession session) {
+        Customer currentUser = (Customer) session.getAttribute("user");
+
+        if (currentUser == null) {
+            return ResponseEntity.status(401).body("Unauthorized - No user logged in");
+        }
+
+        try {
+            reviewService.deleteReview(reviewId, currentUser.getId());
+            return ResponseEntity.ok("Review deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
     }
 
 }

@@ -25,7 +25,6 @@ public class Review {
     @ManyToOne
     private Customer customer;
 
-    // Getters and setters
     public long getId() {
         return id;
     }
