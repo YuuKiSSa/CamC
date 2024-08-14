@@ -116,7 +116,18 @@ public class CameraRestController {
 	}
 
 	@GetMapping("/details/{id}")
-	public ResponseEntity<?> getCameraDetails(@PathVariable Long id) {
+	public ResponseEntity<?> getCameraDetails(@PathVariable Long id, HttpSession session) {
+		Object user = session.getAttribute("user");
+
+		if (user instanceof Customer customer){
+            Optional<Camera> camera = customerService.findById(id);
+			if (camera.isPresent()) {
+				if (camera.get().getTags() != null && !camera.get().getTags().isEmpty()) {
+					preferenceService.recordVisits(customer, camera.get().getTags());
+				}
+			}
+		}
+
 		CameraDetailDTO cameraDetails = cameraDetailService.getCameraDetails(id);
 		if (cameraDetails != null) {
 			return ResponseEntity.ok(cameraDetails);
